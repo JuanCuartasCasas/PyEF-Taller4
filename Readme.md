@@ -1,8 +1,10 @@
-Juan Diego Cuartas Casas, <jucuartasc@unal.edu.co>Paula Valeria Rivera
-Duran, <priverad@unal.edu.co>David Felipe Pinzon Polania,
-<dpinzonpo@unal.edu.co>
+- Juan Diego Cuartas Casas, <jucuartasc@unal.edu.co>
 
-El presente informa la resolución del taller numero 4, Abarcando los
+- Paula Valeria Rivera Duran, <priverad@unal.edu.co>
+
+- David Felipe Pinzon Polania,<dpinzonpo@unal.edu.co>
+
+El presente responde a la resolución del taller numero 4, Abarcando los
 conceptos de **Medidas de Tendencia Central**, **Medidas de
 Localización** y **Medidas de variabilidad**, discutiendo y
 soluicionando las preguntas asignadas.
@@ -57,7 +59,7 @@ $$ \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} $$
     con respecto al promedio.
 
 5.  Por lo general, la media y la mediana de un conjunto de datos son
-    valores muy similares.\_\_Verdadero\_\_
+    valores muy similares. **Verdadero**
 
     Las tendencias como la mediana responden a variables medidas en una
     escala ordinal, de forma que a partir de un orden y una cantidad
@@ -207,13 +209,13 @@ Subsecuentemente, logramos hallar el total de condados
 $\sum_{i=1}^{n} x_i = 3068$ de esta forma, obtenemos las frecuencias
 relativas de los condados por cada intervalo de poblacion.
 
-$$ h_j = \frac{nj}{3068}$$
+$$h_j = \frac{nj}{3068}$$
 
 A su vez, se obtuvieron las frecuencias acumuladas:
 
-$$ N_j = \sum_{k=1}^{j}(n_k)$$
+$$N_j = \sum_{k=1}^{j}(n_k)$$
 
-$$ H_j = \sum_{k=1}^{j}(h_k)$$
+$$H_j = \sum_{k=1}^{j}(h_k)$$
 
 A partir de los datos obtenidos, se calcularon las medidas de tendencia
 central, para datos agrupados por intervalos .
@@ -222,7 +224,7 @@ Debido a que los datos están agrupados por intervalos, debemos obtener
 una marca de clase, referencia para operar la frecuencia y obtener un
 promedio aproximado.
 
-$$ y_j = \frac{l_{j-1}+l_j}{2}$$ donde $l$ es igual al maximo del
+$$y_j = \frac{l_{j-1}+l_j}{2}$$ donde $l$ es igual al maximo del
 intervalo.
 
 | Marca de clase |
@@ -246,7 +248,7 @@ De esta forma se calculo $M = 29.31597$
 
 A su vez se calcula la mediana por intervalos a partir de la ecuacion:
 
-$$ P_{50} \approx l_{k-1} + a_k \left( \frac{0.5n - N_{k-1}}{n_k} \right) $$
+$$P_{50} \approx l_{k-1} + a_k \left( \frac{0.5n - N_{k-1}}{n_k} \right)$$
 
 La forma para calcular el percentil 50 se obtuvo a partir del total, en
 el intervalo cuya frecuencia acumulada sea mayor o igual a
@@ -261,19 +263,19 @@ igualmente $n = 3068$, $N{k-1} =  1522$ , $n_k = 273$
 
 de forma que la funcion final es:
 
-$$ P_{50} \approx 21.619 + 6.907 \left(\frac{0.5*3068 - 1522}{273} \right)$$
+$$P_{50} \approx 21.619 + 6.907 \left(\frac{0.5*3068 - 1522}{273} \right)$$
 
 de esta forma obtenemos $P_{50} \approx 21.922,6044$
 
 Finalmente, calcumlamos la moda a partir de la formula:
 
-$$ M_d(x) = l_{k-1} + a_k \left( \frac{n_k - n_{k-1}}{2n_k - n_{k-1} - n_{k+1}} \right) $$
+$$M_d(x) = l_{k-1} + a_k \left( \frac{n_k - n_{k-1}}{2n_k - n_{k-1} - n_{k+1}} \right)$$
 
 observando $l_k$ como el intervalo con mayor frecuencia absoluta, lo
 encontramos $l_k$ = 28.526 - 40.342 a su vez $a_k = 11.816$ $n_k = 334$,
 $n_{k-1} = 273$, $n_{k+1} = 326$
 
-$$ M_d(x) = 28.526 + 11.816 \left( \frac{334 - 273}{2(334) - 273 - 326} \right) $$
+$$M_d(x) = 28.526 + 11.816 \left( \frac{334 - 273}{2(334) - 273 - 326} \right)$$
 
 a partir de R se obtiene $M_d(x) = 38.97203$
 
@@ -310,7 +312,7 @@ desviación estandar
 
 - Recordemos $M(k_1 + k_2x) = k_1 + k2M(x)$
 
-- A su vez \$ s(k_1 X + k_2) = \|k_1\| , s(X)
+- A su vez $s(k_1 X + k_2) = |k_1| \, s(X)$
 
 como al cambiar la escala de celsius a farenheit, variamos la variable
 en si, debemos aplicar estas propiedades.
@@ -321,10 +323,10 @@ $^\circ\text{F} = \frac{9}{5}^\circ\text{C} + 32$.
 ### Conversión a Grados Fahrenheit
 
 - **Promedio muestral:**
-  $$ \bar{x}_F = \frac{9}{5}\bar{x}_C + 32 = \frac{9}{5}(87.3) + 32 = 189.14^\circ\text{F} $$
+  $$\bar{x}_F = \frac{9}{5}\bar{x}_C + 32 = \frac{9}{5}(87.3) + 32 = 189.14^\circ\text{F}$$
 
 - **Desviación estándar muestral:**
-  $$ s_F = \frac{9}{5}s_C = \frac{9}{5}(1.04) = 1.872^\circ\text{F} $$
+  $$s_F = \frac{9}{5}s_C = \frac{9}{5}(1.04) = 1.872^\circ\text{F}$$
 
 Obteniendo $\bar{x}_F = 189.14^\circ\text{F}$ y
 $s_F = 1.872^\circ\text{F}$
@@ -385,11 +387,13 @@ $$SCD = \sum_{i=1}^n x_i^2 - 2 \left( \frac{\sum_{i=1}^n x_i}{n} \right) \left( 
 
 5.  Simplificando sistematicamente se tiene:
 
-    $$SCD = \sum_{i=1}^n x_i^2 - 2 \frac{\left( \sum_{i=1}^n x_i \right)^2}{n} + n \frac{\left( \sum_{i=1}^n x_i \right)^2}{n^2}$$
-    $$SCD = \sum_{i=1}^n x_i^2 - 2 \frac{\left( \sum_{i=1}^n x_i \right)^2}{n} + \frac{\left( \sum_{i=1}^n x_i \right)^2}{n}$$
-    $$SCD = \sum_{i=1}^n x_i^2 - \frac{\left( \sum_{i=1}^n x_i \right)^2}{n}$$
+    - $$SCD = \sum_{i=1}^n x_i^2 - 2 \frac{\left( \sum_{i=1}^n x_i \right)^2}{n} + n \frac{\left( \sum_{i=1}^n x_i \right)^2}{n^2}$$
 
-6.  Finalmente, Reemplazando esto en el numerador de la desviación
+    - $$SCD = \sum_{i=1}^n x_i^2 - 2 \frac{\left( \sum_{i=1}^n x_i \right)^2}{n} + \frac{\left( \sum_{i=1}^n x_i \right)^2}{n}$$
+
+    - $$SCD = \sum_{i=1}^n x_i^2 - \frac{\left( \sum_{i=1}^n x_i \right)^2}{n}$$
+
+7.  Finalmente, Reemplazando esto en el numerador de la desviación
     estandar, se tiene:
 
 $$s = \sqrt{\frac{\sum_{i=1}^n x_i^2 - \frac{\left( \sum_{i=1}^n x_i \right)^2}{n}}{n - 1}}$$
