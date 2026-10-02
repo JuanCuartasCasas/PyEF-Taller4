@@ -1,0 +1,459 @@
+---
+Title: Taller 4
+author:  
+    - Juan Diego Cuartas Casas, jucuartasc@unal.edu.co
+    - Paula Valeria Rivera Duran, priverad@unal.edu.co
+    - David Felipe Pinzon Polania, dpinzonpo@unal.edu.co
+output:
+    github_document:
+    highlight: default
+    number_sections: yes
+    theme: cosmo
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+El presente informa la resolución del taller numero 4, Abarcando los conceptos de __Medidas de Tendencia Central__, 
+__Medidas de Localización__ y __Medidas de variabilidad__, discutiendo y soluicionando las preguntas asignadas.
+
+## Parte 1.
+
+**Justifique las siguiente afirmaciones**
+
+1. La mitad de las observaciones de una muestra es menor o igual que la media. __Falso__
+
+    La forma en que definimos la media, como la división de la suma total de elementos sobre 
+    el numero de estos, no encuentra ninguna relacion que garantice esta condicion para __TODAS__ 
+    las situaciones.
+
+    Solamente logra cumplirse cuando los datos se distribuyen de forma simetrica perfectamente; en 
+    la gran mayoria de casos reales, los valores forman distribuciones segadas.
+
+Recordemos la ecuacion de la media:
+
+$$ \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} $$
+
+
+2. La media de un conjunto de datos es el valor que ocurre con más frecuencia. __FALSO__
+
+    Aunque el valor de la media se acerca más al valor que aparezca con más frecuencia,
+    No es cierto que para todos los casos sea exactamente un valor hallado en la muestra.
+    La setencia se cumple para la medida de tendencia _MODA_.
+
+3.  La media de una muestra es igual a una de las observaciones de la muestra. __FALSO__
+
+    Bajo la misma logica anterior, la media suele acercarse al valor con máyor frecuencia,  
+    pero en la realidad nunca llega a ser exactamente el mismo numero, debido a que 
+    habrán puntos disperos con respecto a este, causando que se desplace.
+
+4. Es preferible utilizar un instrumento de medición que genere observaciones con una desviación estándar grande. __FALSO__
+
+    Definimos la desviacion estandar como la dispersión en general que 
+    tienen todos los valores con respecto a su media. Una gran magnitud conllevaria 
+    a una dispersión de valores muy grande, diferentes al promedio.
+
+    El ideal buscado en las herramientas es la precisión, por lo que la repetitibilidad
+    de la muestra debe desviarse lo más minimo posible con respecto al promedio.
+
+
+5. Por lo general, la media y la mediana de un conjunto de datos son valores muy similares.__Verdadero__
+    
+    Las tendencias como la mediana responden a variables medidas en una escala ordinal,
+    de forma que a partir de un orden y una cantidad fija, logramos encontrar el valor medio,
+    de donde tienden a acercarse más los valores, causando que se acerque a su vez el promedio.
+
+## Parte 2
+
+- Complete la tabla
+
+A partir del contexto junto con los datos entregados, buscamos analizar las medidas
+de localización de dos categorias, y a su vez compararlas, de forma que podamos refutar
+la hipotesis de que la emisión de particulas es mayor a grandes altitudes.
+
+| Altitud | $n$ | Mín. | Cuar. 1 | Cuar. 2 | Cuar. 3 | Máx. | Media   |   DE     |    CV     |
+|:-------:|:---:|------|---------|---------|---------|------|---------|----------|-----------|
+| Baja    | 138 | 0.25 | 1.4725  |  3.18   |  5.265  |11.23 |3.714565 | 2.55804  | 0.6886513 |
+| Ala     | 62  | 1.11 | 3.4875  |  5.75   |  7.75   |23.38 |6.596452 | 4.518998 | 0.685065  |
+
+Como resolucion, debemos analizar los datos medidos en ambas condiciones.
+
+A partir  de la recolección de datos en R:
+
+```{r, echo = T, eval = F}
+
+datos <- read.table(file = "C:\\Users\\julie\\Unal\\2026-2\\Probabilidad y Estadistica Fundamental\\EP.txt", header =TRUE)
+baja <- datos$emision[datos$altitud == 0]
+alta <- datos$emision[datos$altitud == 1]
+
+```
+
+logramos obtener:
+
+ - $MIN = 0.25$
+
+ - $Quartil1 = 1.4725$
+
+ - $Quartil2 = 3.18$
+
+ - $Quartil3 = 5.265$
+
+La forma interna que posee R de hallarlos facilmente es, 
+ordenarlos de forma tal que, para una categoria especifica, 
+hallar el valor _T_ tal que el $25\%$ $50\%$ $75\%$ de los datos se encuentren
+por debajo de este dato.
+
+Esto surge a partir de la funcion `quantile(baja, 0.75)` integrada en R
+
+De la misma forma, logramos obtener las medidas de localización de la categoria de altas altitudes.
+
+Principalmente, logramos observar que los rangos en que actuan las mediciones de altas altitudes
+es mayor, interpretando que la emisión de particulas en $gr/gal$ de la población es mayor, sin embargo 
+dado a que los datos estan dados en contextos diferentes, no se lograria hallar una conclusión culminante,
+por lo que se buscó el promedio de ambas categorias, su desviación y , cómo medio de comparación,
+el coeficiente de variación de pearson, el cual nos dara las unidades correctas bajo una relación comparable
+entre ambas categorias.
+
+Recordando la ecuación de la desviación estandar: 
+
+$$ s = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1}} $$
+
+utilizamos: 
+
+$$ s_{baja} = \sqrt{\frac{\sum_{i=1}^{n} (x_i - 3.714565)}{137}} $$
+
+
+$$ s_{baja} = 2.55804$$
+
+Utilizando el mismo razonamiento obtenemos $S_{alta} = 4.518998$
+
+La forma para corroborar estas operaciones surge a partir del uso de la consola:
+```r
+s_baja <- sd(baja)
+
+s_alta <- sd(alta)
+
+print(s_alta)
+
+print(s_baja)
+```
+
+
+Nuevamente, podria darse a la conclusion que la separación
+general entre los datos del promedio se duplica al encontrarnos 
+en altitudes altas, sin embargo, como las emisiones promedio
+por altitud son diferentes, es conveniente considerar la relacion de 
+sus desviaciones con respecto a la media.
+
+La forma de hallar esta relacion surge a partir de el coeficiente de variación de pearson:
+
+$$CV = \frac{s}{\bar{x}} \times 100\%$$
+
+$$CV_{baja} = \frac{2.55804}{3.714565}$$
+
+$$ CV_{baja} = 0.6886513$$
+
+A su vez 
+
+$CV{alta} = \frac{4.158998}{6.596452}$  igual a  $CV{alta} = 0.685065$
+
+Finalmente, bajo condiciones iguales, logramos observar que las variaciones de 
+emisión frente al promedio son las mismas, la influencia de los datos segun su escala
+se suprimio al realizar los coeficientes de variacion.
+
+Logrando asegurar que el supuesto de que la emisión de particulas es mayor
+a grandes altitudes es __FALSA__. 
+
+Logramos observar que la diferencia entre 
+ambas altitudes es de $0.0035873$, una diferencia casi imperceptible,
+por lo que concluimos que la altitud de un vehiculo no afecta la emisión que 
+este provoca.
+
+## Parte 3
+Bajo este contexto, se nos ofrecen los datos de los condados estadounidenses, 
+junto con un intervalo de la poblacion, hallado en miles.
+
+
+En este caso, se solicita completar la distribución de frencuencias,
+pues al encontrarse los valores medidos ordinalmente, por intervalos, 
+es conveniente identificar sus caracteristicas relevantes con mayor 
+facilidad y describir su comportamiento de una manera evidente.
+
+| Población (en miles) | No. de condados | Fr. Relativa | Fr.Rel.acumulada | Fr.Abs.acumulada| 
+|:--------------------:|:---------------:|:------------:|:----------------:|:---------------:|
+| 0.064   - 5.405      | 305             |    0.0994    |     0.0994       |        305      |
+| 5.405   - 8.780      | 294             |    0.0958    |     0.1952       |        599      |
+| 8.780   - 12.417     | 331             |    0.1078    |     0.303        |        930      |
+| 12.417  - 16.384     | 286             |    0.0932    |     0.3962       |        1216     |
+| 16.384  - 21.619     | 306             |    0.0997    |     0.4959       |        1522     |
+| 21.619  - 28.526     | 273             |    0.0889    |     0.5848       |        1795     |
+| 28.526  - 40.342     | 334             |    0.1088    |     0.6936       |        2129     |
+| 40.342  - 65.536     | 326             |    0.1062    |     0.7998       |        2455     |
+| 65.536  - 131.072    | 290             |    0.0945    |     0.8943       |        2745     |
+| 131.072 - 8388.608   | 323             |    0.1052    |     1.0          |        3068     |
+
+Inicialmente identificamos que el primer dato dado corresponde a la frecuencia
+absoluta de los datos, pues describe la cantidad de observaciones que hacen parte 
+de un intervalo.
+
+Subsecuentemente, logramos hallar el total de condados $\sum_{i=1}^{n} x_i = 3068$
+de esta forma, obtenemos las frecuencias relativas de los condados por cada
+intervalo de poblacion.
+
+$$ h_j = \frac{nj}{3068}$$ 
+
+A su vez, se obtuvieron las frecuencias acumuladas:
+
+$$ N_j = \sum_{k=1}^{j}(n_k)$$
+
+$$ H_j = \sum_{k=1}^{j}(h_k)$$
+
+A partir de los datos obtenidos, se calcularon las medidas de tendencia central,
+para datos agrupados por intervalos .
+
+Debido a que los datos están agrupados por intervalos, debemos obtener una marca de
+clase, referencia para operar la frecuencia y obtener un promedio aproximado.
+
+$$ y_j = \frac{l_{j-1}+l_j}{2}$$ donde $l$ es igual al maximo del intervalo.
+
+| Marca de clase |
+|:---------------|
+|    2.7345      |
+|    7.0925      |
+|    10.5985     |
+|    14.4005     |
+|    19.0015     |
+|    25.0725     |
+|    34.434      |
+|    52.939      |
+|    98.304      |
+|    4259.84     |
+
+A partir de esta referencia logramos obtener:
+
+$$M(y) ≈ \frac{1}{3068} \sum_{j=1}^{m} n_j y_j = \sum_{j=1}^{m} h_j y_j $$
+
+De esta forma se calculo $M = 29.31597$
+
+A su vez se calcula la mediana por intervalos a partir de la ecuacion:
+
+$$ P_{50} \approx l_{k-1} + a_k \left( \frac{0.5n - N_{k-1}}{n_k} \right) $$
+
+La forma para calcular el percentil 50 se obtuvo a partir del total, en el intervalo cuya 
+frecuencia acumulada sea mayor o igual a $0.5 * 3068 = 1534$. En este caso se puede observar
+que este es el intervalo numero 6. por lo tanto $l_k = 6$ -> 21.619 - 28.526
+
+A su vez identificamos $a_k$ como el desplazamiento en el intervalo
+
+$$a_k = 28.526 - 21.619 = 6.907$$
+
+igualmente $n = 3068$, $N{k-1} =  1522$ , $n_k = 273$
+
+de forma que la funcion final es:
+
+$$ P_{50} \approx 21.619 + 6.907 \left(\frac{0.5*3068 - 1522}{273} \right)$$
+
+de esta forma obtenemos $P_{50} \approx 21.922,6044$
+
+Finalmente, calcumlamos la moda a partir de la formula:
+
+$$ M_d(x) = l_{k-1} + a_k \left( \frac{n_k - n_{k-1}}{2n_k - n_{k-1} - n_{k+1}} \right) $$
+
+observando $l_k$ como el intervalo con mayor frecuencia absoluta, lo encontramos $l_k$ = 28.526 - 40.342
+a su vez $a_k = 11.816$ $n_k = 334$, $n_{k-1} = 273$, $n_{k+1} = 326$     
+
+$$ M_d(x) = 28.526 + 11.816 \left( \frac{334 - 273}{2(334) - 273 - 326} \right) $$
+
+a partir de R se obtiene $M_d(x) = 38.97203$
+
+Finalmente, obtenemos una tabla con las medidas de tendencia central
+de la muestra dada: 
+
+| Media | Mediana |   Moda  |
+|:------|:--------|:--------|
+|29.3159| 21.922  |38.97203 |
+
+Como conclusión, se podria notar que el promedio $29.3159$ se encuentra entre el 
+intervalo con mayor frecuencia absoluta, siendo congruente con lo esperado.
+
+Además, la mediana se encuentra especificada directamente en el intervalo medio,
+y calculada con precisión a partir de la ecuación, en el interior del intervalo.
+
+La moda se encuentra entre el intervalo con mayor frecuencia absoluta.
+
+Se puede observar que las medidas de tendencia central se enceuntran 
+muy cercanas entre si, entre dos intervalos seguidos, concluyendo una dispersión pequeña
+en la muestra, sin necesidad de calcular la desviación estandar.
+
+
+## Parte 4
+
+En la sección 4, se nos ofrece como contexto un promedio muestral 
+y una desviación en escalas fijas, se busca calcular el mismo sin embargo bajo 
+otra escala diferente.
+
+Para esto debemos tener en cuenta las propiedades de el promedio y la desviación
+estandar
+
+- Recordemos $M(k_1 + k_2x) = k_1 + k2M(x)$
+
+- A su vez $ s(k_1 X + k_2) = |k_1| \, s(X) 
+
+como al cambiar la escala de celsius a farenheit, variamos la variable
+en si, debemos aplicar estas propiedades.
+
+Recuerdese la relación de conversión $^\circ\text{F} = \frac{9}{5}^\circ\text{C} + 32$.
+
+### Conversión a Grados Fahrenheit
+
+* **Promedio muestral:**
+  $$ \bar{x}_F = \frac{9}{5}\bar{x}_C + 32 = \frac{9}{5}(87.3) + 32 = 189.14^\circ\text{F} $$
+
+* **Desviación estándar muestral:**
+  $$ s_F = \frac{9}{5}s_C = \frac{9}{5}(1.04) = 1.872^\circ\text{F} $$
+
+Obteniendo $\bar{x}_F = 189.14^\circ\text{F}$ y $s_F = 1.872^\circ\text{F}$
+
+## Parte 5
+
+En  este caso, se nos presentan dos variables $X$ y $Y$ donde, a partir de sus sumatorias,
+debemos hallar el coeficiente de variacion de pearson y comparar sus resultados.
+
+Sin embargo unicamente se nos ofrecen los datos de sus sumatorias y sumatorias cuadradas:
+
+$\sum_{i=1}^{10} (x_i) = 110$ y $\sum_{i=1}^{10} (x_i)^2 = 3156$
+
+En este caso, para obtener el coeficiente de variación, debemos obtener tanto el promedio
+como la desviación estandar de la variable.
+
+Inicialmente, el promedio se define como la sumatoria de los valores sobre la cantidad de estos,
+como logramos ver, la sumatoria a su vez nos ofrece la cantidad de elementos que se encuentran en 
+la muestra, pues es el limite del pivote $i$, por lo tanto.
+
+$\bar{x} = \frac{\sum_{i=1}^{10} (x_i)}{n} = \frac{110}{10} = 11$
+
+Por otro lado, obtener la desviación estandar surgio de desarrollar a partir de la ecuación
+general, anteriormente aplicada, hasta encontrar una forma de representación de esta a partir de 
+las sumatorias, el desarollo fue el siguiente:
+
+1. Iniciamos a partir de la definición de varianza, pues esta al no estar en terminos de raiz simplifica
+    el desarrollo, especificamente del numerador de la varianza, llamado la **Suma de Cuadrados de las Desviaciones 
+    (SCD)**:
+
+    $$SCD = \sum_{i=1}^n (x_i - \bar{x})^2$$
+
+2. Desarrollamos elbinomio cuadrado:
+$$SCD = \sum_{i=1}^n \left( x_i^2 - 2 x_i \bar{x} + \bar{x}^2 \right)$$
+
+3. Aplicando propiedades de las sumatorias, obtenemos una separación por variables:
+
+$$SCD = \sum_{i=1}^n x_i^2 - \sum_{i=1}^n (2 x_i \bar{x}) + \sum_{i=1}^n \bar{x}^2$$
+
+4. Analizamos cada sumatoria, observando constantes y aplicando la propiedad:
+$\sum_{i=1}^n C = nC$. 
+ - La media $\bar{x}$ es una constante con respecto al índice $i$, por lo que sale de la sumatoria en el término medio:
+     $$\sum_{i=1}^n (2 x_i \bar{x}) = 2 \bar{x} \sum_{i=1}^n x_i$$
+    
+    Sustituimos el valor de $\bar{x}$ como $\frac{\sum_{i=1}^{n}(x_i)}{n}$
+
+Sustituyendo obtenemos:
+
+$$SCD = \sum_{i=1}^n x_i^2 - 2 \left( \frac{\sum_{i=1}^n x_i}{n} \right) \left( \sum_{i=1}^n x_i \right) + n \left( \frac{\sum_{i=1}^n x_i}{n} \right)^2$$
+
+5. Simplificando sistematicamente se tiene:
+
+   $$SCD = \sum_{i=1}^n x_i^2 - 2 \frac{\left( \sum_{i=1}^n x_i \right)^2}{n} + n \frac{\left( \sum_{i=1}^n x_i \right)^2}{n^2}$$
+   $$SCD = \sum_{i=1}^n x_i^2 - 2 \frac{\left( \sum_{i=1}^n x_i \right)^2}{n} + \frac{\left( \sum_{i=1}^n x_i \right)^2}{n}$$
+   $$SCD = \sum_{i=1}^n x_i^2 - \frac{\left( \sum_{i=1}^n x_i \right)^2}{n}$$
+
+
+
+6. Finalmente, Reemplazando esto en el numerador de la desviación estandar, se tiene:
+
+$$s = \sqrt{\frac{\sum_{i=1}^n x_i^2 - \frac{\left( \sum_{i=1}^n x_i \right)^2}{n}}{n - 1}}$$
+
+Aplicandolo a cada condición obtenemos:
+
+$$s_X = \sqrt{\frac{3156 - \frac{110^2}{10}}{9}}$$
+$$s_X = 14.7045$$
+
+A su vez:
+
+$$s_Y = \sqrt{\frac{1130 - \frac{60^2}{10}}{9}}$$
+
+$$s_Y = 9.2976$$
+
+Calculado el $CV = \frac{s}{\bar{a}}*100\%$ obtenemos:
+
+$$CV_x = \frac{14.7045}{11}*100\% = 133.68\%$$
+
+junto con:
+
+$$CV_x = \frac{9.2976}{6}*100\% = 154.96\%$$
+
+Como analisis comparativo, logramos observar que el coeficiente de y es mayor que el de x: $CV_Y > CV_X$, 
+lo cual nos hace ber que la dispersiòn de datos con respecto al promedio es màs grande en $Y$, aunque ambos 
+posean en si una desviaciòn considerablemente grande.
+
+Como medio para garantizar el valor obtenido, se realiza el còdigo en r utilizando las operaciones obtenidas
+a partir la ecuaciòn obtenida:
+
+```{r}
+# Datos iniciales
+n <- 10
+
+sum_x  <- 110
+sum_x2 <- 3156
+
+sum_y  <- 60
+sum_y2 <- 1138
+
+# Definimos una función para calcular ambas variables, evitando reescribir codigo
+calc_stats <- function(n, sum_v, sum_v2) {
+  mean_v <- sum_v / n
+  var_v  <- (sum_v2 - (sum_v^2 / n)) / (n - 1)
+  sd_v   <- sqrt(var_v)
+  cv_v   <- (sd_v / mean_v) * 100
+  
+  return(data.frame(Media = mean_v, Varianza = var_v, Desv_Estd = sd_v, CV_Porcentaje = cv_v))
+}
+
+# Resultados para X e Y
+res_X <- calc_stats(n, sum_x, sum_x2)
+res_Y <- calc_stats(n, sum_y, sum_y2)
+
+# Tabla comparativa
+resultados <- rbind(Variable_X = res_X, Variable_Y = res_Y)
+knitr::kable(resultados, digits = 4)
+```
+
+## Parte 6
+
+En este caso, se solicita realizar una comparación entre dos variables con unidades de medida variables
+hectareas y dinero. 
+
+Se nos ofrecen los datos: 
+
+- media de distribución de predios: $35.4$ 
+
+- desviación tipica de predios: $19.33$
+
+- distribución media de arrendamiento: $\$245,750$ 
+
+- desviación de arrendamiento : $\$7,470$
+
+Debido a que son unidades diferentes, y a su vez poseen escalas diferentes, se requiere el coeficiente
+de variación para comparar la dispersion con la media.
+
+$$CV_{predios} = |\frac{19.33}{35.4}| *100\% = 54,60\% $$
+
+$$CV_{arrendamiento} = |\frac{7,470}{245,750}| *100\% = 3.04\% $$
+
+A partir de esto logramos demostrar que la distribución por **extensión** posee una 
+variabilidad mayor que la distribución por **canon de arrendamiento** debido a que sus datos
+se dispersan mucho más en proporción a su promedio
+
+Finalmente, el desarollo del taller logro afianzar de manera práctica el uso de las 
+medidas de tendencia y de variabilidad, hallando patrones y analizando resultados surgidos a partir
+de los datos, aplicados a una medida estadística descriptiva.
